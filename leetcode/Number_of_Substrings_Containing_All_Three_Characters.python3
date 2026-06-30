@@ -1,0 +1,27 @@
+class Solution:
+    def numberOfSubstrings(self, s: str) -> int:
+        count = [0, 0, 0]  # counts of a, b, c in current window
+        left = 0
+        result = 0
+        
+        for right in range(len(s)):
+            # Step 1: add s[right] to the window
+            idx = ord(s[right]) - ord('a')
+            count[idx] += 1
+            
+            # Step 2: shrink from left while window is still valid
+            while count[0] > 0 and count[1] > 0 and count[2] > 0:
+                # remove s[left] from window
+                left_idx = ord(s[left]) - ord('a')
+                count[left_idx] -= 1
+                left += 1
+            
+            # Step 3: at this point, left is ONE PAST the smallest valid start
+            # because the while loop just broke validity
+            result += left
+        
+        return result
+    
+
+
+        
